@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: ship-optimizer-api
+    env: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: MONGO_URL
+        value: mongodb://localhost:27017
+      - key: DB_NAME
+        value: ship_optimizer
+      - key: PYTHONUNBUFFERED
+        value: "1"
+    healthCheckPath: /api/
