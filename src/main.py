@@ -4,9 +4,6 @@ Enhanced Ship Optimizer API - Multi-objective optimization with alternative rout
 """
 
 from fastapi import FastAPI, APIRouter, HTTPException
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
 from fastapi.requests import Request
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
@@ -35,9 +32,6 @@ db = client[os.environ['DB_NAME']]
 # Create the main app
 app = FastAPI(title="Enhanced Ship Optimizer API")
 
-# Mount static files and templates
-app.mount("/static", StaticFiles(directory=ROOT_DIR / "static"), name="static")
-templates = Jinja2Templates(directory=ROOT_DIR / "templates")
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
@@ -409,11 +403,6 @@ def generate_cost_optimized_waypoints(base_waypoints):
     
     return optimized
 
-# API Routes
-@app.get("/", response_class=HTMLResponse)
-async def index(request: Request):
-    """Serve the enhanced ship optimizer interface"""
-    return templates.TemplateResponse("index.html", {"request": request})
 
 @api_router.get("/")
 async def root():
